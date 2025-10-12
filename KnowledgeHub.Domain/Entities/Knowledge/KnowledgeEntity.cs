@@ -9,6 +9,6 @@ public class KnowledgeEntity : BaseEntity
     public string Description { get; set; }
     public Guid UserId { get; set; }
     public UserEntity User { get; set; }
-    public IList<KnowledgeSourceEntity> KnowledgeSources { get; set; }
-    public IList<KnowledgeCategoryEntity> KnowledgeCategories { get; set; }
+    public IList<KnowledgeSourceEntity> KnowledgeSources { get; set; } = [];
+    public IList<KnowledgeCategoryEntity> KnowledgeCategories { get; set; } = [];
 }

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowledgeHub.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowledgeHub.Domain", "KnowledgeHub.Domain\KnowledgeHub.Domain.csproj", "{1A0E7207-DA1A-4718-AEB4-1D1CDBCDC7AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowledgeHub.Application", "KnowledgeHub.Application\KnowledgeHub.Application.csproj", "{708F0591-F584-4F44-BB14-27E20E63BB92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1A0E7207-DA1A-4718-AEB4-1D1CDBCDC7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A0E7207-DA1A-4718-AEB4-1D1CDBCDC7AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A0E7207-DA1A-4718-AEB4-1D1CDBCDC7AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{708F0591-F584-4F44-BB14-27E20E63BB92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{708F0591-F584-4F44-BB14-27E20E63BB92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{708F0591-F584-4F44-BB14-27E20E63BB92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{708F0591-F584-4F44-BB14-27E20E63BB92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
