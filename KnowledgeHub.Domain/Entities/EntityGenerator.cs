@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using KnowledgeHub.Domain.Dtos.User;
 using KnowledgeHub.Domain.Entities.Abstract;
 using KnowledgeHub.Domain.Entities.Knowledge;
 using KnowledgeHub.Domain.Entities.User;

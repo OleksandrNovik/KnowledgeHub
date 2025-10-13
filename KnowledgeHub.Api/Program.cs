@@ -1,5 +1,5 @@
+using KnowledgeHub.Api.Helpers;
 using KnowledgeHub.Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,17 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnection"))
-        .UseAsyncSeeding(async (context, _, ct) =>
-        {
-            if (!ct.IsCancellationRequested)
-            {
-                await context.SeedAsync(ct);
-            }
-        });
-});
+
+builder.ConfigureDbContext()
+    .ConfigureJwtAuthentication();
 
 var app = builder.Build();
 
@@ -33,6 +25,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 var summaries = new[]
 {

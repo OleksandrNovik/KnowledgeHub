@@ -1,13 +1,8 @@
-﻿using KnowledgeHub.Domain.Entities.Abstract;
+﻿using KnowledgeHub.Domain.Dtos.User;
+using KnowledgeHub.Domain.Entities.Abstract;
 using KnowledgeHub.Domain.Entities.Knowledge;
 
 namespace KnowledgeHub.Domain.Entities.User;
-
-public enum UserRole
-{
-    Default,
-    Admin
-}
 
 public class UserEntity : BaseEntity
 {
