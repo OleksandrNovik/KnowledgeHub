@@ -1,5 +1,7 @@
 ﻿using System.Text;
+using KnowledgeHub.Application.Services.User;
 using KnowledgeHub.Infrastructure.Database;
+using KnowledgeHub.Infrastructure.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -54,5 +56,14 @@ public static class BuilderConfigurationHelper
         builder.Services.AddAuthorization();
 
         return builder;
+    }
+
+    /// <summary>
+    ///     Adds all services for the application to DI container
+    /// </summary>
+    public static IServiceCollection RegisterServices(this IServiceCollection services)
+    {
+        services.AddTransient<IJwtService, JwtService>();
+        return services;
     }
 }
