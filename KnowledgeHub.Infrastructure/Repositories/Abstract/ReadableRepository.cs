@@ -9,6 +9,7 @@ namespace KnowledgeHub.Infrastructure.Repositories.Abstract;
 /// <summary>
 ///     Base implementation of read operations in repository
 /// </summary>
+/// <param name="dbContext"> Db context for access to data base </param>
 /// <typeparam name="TEntity"> Type of entity for repository </typeparam>
 public abstract class ReadableRepository<TEntity>(DbContext dbContext)
     : IReadableRepository<TEntity> where TEntity : BaseEntity

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KnowledgeHub.Infrastructure.Repositories;
 
-public class UserRepository(ApplicationDbContext dbContext) : ReadableRepository<UserEntity>(dbContext)
+public class UserRepository(ApplicationDbContext dbContext) : UpdatableRepository<UserEntity>(dbContext)
 {
     /// <summary>
     ///     Gets first user by provided predicate. Tracks changes at user entity
