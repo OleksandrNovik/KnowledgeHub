@@ -1,6 +1,8 @@
 ﻿using System.Text;
+using KnowledgeHub.Application.Repositories;
 using KnowledgeHub.Application.Services.User;
 using KnowledgeHub.Infrastructure.Database;
+using KnowledgeHub.Infrastructure.Repositories;
 using KnowledgeHub.Infrastructure.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -64,6 +66,14 @@ public static class BuilderConfigurationHelper
     public static IServiceCollection RegisterServices(this IServiceCollection services)
     {
         services.AddTransient<IJwtService, JwtService>();
+
+        return services;
+    }
+
+    public static IServiceCollection RegisterRepositories(this IServiceCollection services)
+    {
+        services.AddTransient<IUserRepository, UserRepository>();
+
         return services;
     }
 }

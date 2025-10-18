@@ -16,15 +16,19 @@ namespace KnowledgeHub.Infrastructure.Services.User;
 public class JwtService(IConfiguration configuration) : IJwtService
 {
     /// <inheritdoc />
-    public string? GenerateJwtToken(UserIdentity userIdentity)
+    public JwtToken? GenerateJwtToken(UserIdentity userIdentity)
     {
-        string? jwt = null;
+        JwtToken? jwt = null;
 
         try
         {
+            var creationTime = DateTime.UtcNow;
+            var expirationOffset = configuration.GetValue<long>("Jwt:ExpiresInSeconds", 1800);
+
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userIdentity.Username),
+                new Claim(JwtRegisteredClaimNames.Sub, userIdentity.Id),
+                new Claim(ClaimTypes.Email, userIdentity.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Role, userIdentity.Role.ToString())
             };
@@ -33,10 +37,11 @@ public class JwtService(IConfiguration configuration) : IJwtService
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(configuration["Jwt:Issuer"], configuration["Jwt:Audience"], claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: creationTime.AddSeconds(expirationOffset),
                 signingCredentials: credentials);
 
-            jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            var stringToken = new JwtSecurityTokenHandler().WriteToken(token);
+            jwt = new JwtToken(stringToken, creationTime, expirationOffset);
         }
         catch (Exception ex)
         {

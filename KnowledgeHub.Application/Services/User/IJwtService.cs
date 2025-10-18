@@ -9,5 +9,5 @@ public interface IJwtService
     /// </summary>
     /// <param name="userIdentity"> User identity data needed to generate token </param>
     /// <returns> Generated JWT token, will return null if something went wrong </returns>
-    public string? GenerateJwtToken(UserIdentity userIdentity);
+    public JwtToken? GenerateJwtToken(UserIdentity userIdentity);
 }
