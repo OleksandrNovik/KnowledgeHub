@@ -25,7 +25,7 @@ public static class MiddlewareHelper
 
         if (result.IsSuccess)
         {
-            return Results.Ok(result);
+            return Results.Ok(result.Value);
         }
 
         var error = result.Errors.FirstOrDefault();
