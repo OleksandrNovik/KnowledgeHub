@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using KnowledgeHub.Application.Services.User;
-using KnowledgeHub.Domain.Dtos.User;
+using KnowledgeHub.Domain.Dtos.User.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
@@ -27,7 +27,7 @@ public class JwtService(IConfiguration configuration) : IJwtService
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userIdentity.Id),
+                new Claim(JwtRegisteredClaimNames.Sub, userIdentity.Id.ToString()),
                 new Claim(ClaimTypes.Email, userIdentity.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Role, userIdentity.Role.ToString())

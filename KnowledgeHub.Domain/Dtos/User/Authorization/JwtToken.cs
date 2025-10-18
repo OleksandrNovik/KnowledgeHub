@@ -1,4 +1,4 @@
-﻿namespace KnowledgeHub.Domain.Dtos.User;
+﻿namespace KnowledgeHub.Domain.Dtos.User.Authorization;
 
 /// <summary>
 ///     Model that contains jwt token information

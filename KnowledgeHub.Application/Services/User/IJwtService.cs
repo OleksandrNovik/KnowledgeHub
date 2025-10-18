@@ -1,4 +1,4 @@
-﻿using KnowledgeHub.Domain.Dtos.User;
+﻿using KnowledgeHub.Domain.Dtos.User.Authorization;
 
 namespace KnowledgeHub.Application.Services.User;
 
