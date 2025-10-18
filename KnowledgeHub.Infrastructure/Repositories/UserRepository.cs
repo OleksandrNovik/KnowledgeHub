@@ -1,13 +1,14 @@
 ﻿using System.Linq.Expressions;
 using KnowledgeHub.Application.Repositories;
 using KnowledgeHub.Domain.Entities.User;
+using KnowledgeHub.Infrastructure.Database;
 using KnowledgeHub.Infrastructure.Repositories.Abstract;
 using KnowledgeHub.Infrastructure.Repositories.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace KnowledgeHub.Infrastructure.Repositories;
 
-public class UserRepository(DbContext dbContext)
+public class UserRepository(ApplicationDbContext dbContext)
     : UpdatableRepository<UserEntity>(dbContext), IUserRepository
 {
     /// <summary>

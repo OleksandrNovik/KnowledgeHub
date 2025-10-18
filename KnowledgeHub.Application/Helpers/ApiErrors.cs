@@ -2,7 +2,7 @@
 using KnowledgeHub.Domain.Dtos.Errors;
 using Microsoft.AspNetCore.Http;
 
-namespace KnowledgeHub.Infrastructure.Helpers;
+namespace KnowledgeHub.Application.Helpers;
 
 public static class ApiErrors
 {

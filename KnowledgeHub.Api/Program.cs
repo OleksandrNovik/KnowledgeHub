@@ -1,5 +1,10 @@
+using AutoMapper;
 using KnowledgeHub.Api.Helpers;
+using KnowledgeHub.Application;
+using KnowledgeHub.Application.User.Registration;
 using KnowledgeHub.Infrastructure.Database;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +13,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi()
     .RegisterServices()
-    .RegisterRepositories();
+    .RegisterRepositories()
+    .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(AssemblyMarker.Assembly));
+
+var config = new MapperConfiguration(cfg => { cfg.AddMaps(KnowledgeHub.Infrastructure.AssemblyMarker.Assembly); },
+    new LoggerFactory());
+
+builder.Services.AddSingleton(config.CreateMapper());
 
 builder.ConfigureDbContext()
     .ConfigureJwtAuthentication();
-
 
 var app = builder.Build();
 
@@ -50,6 +60,12 @@ app.MapGet("/weatherforecast", () =>
         return forecast;
     })
     .WithName("GetWeatherForecast");
+
+app.MapPost("/v1/user/register",
+    async ([FromBody] UserRegistrationCommand command, ISender sender) =>
+    {
+        return await MiddlewareHelper.HandleAsync(sender, command);
+    });
 
 app.Run();
 

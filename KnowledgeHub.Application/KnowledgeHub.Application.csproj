@@ -10,4 +10,17 @@
         <ProjectReference Include="..\KnowledgeHub.Domain\KnowledgeHub.Domain.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="15.0.1"/>
+        <PackageReference Include="MediatR" Version="13.0.0"/>
+        <PackageReference Include="MediatR.Contracts" Version="2.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="Microsoft.Extensions.Identity.Core">
+            <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.9\Microsoft.Extensions.Identity.Core.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
 </Project>
