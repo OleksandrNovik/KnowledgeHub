@@ -19,4 +19,10 @@ public class UserRepository(ApplicationDbContext dbContext)
     {
         return QueryAll(TrackingBehavior.Track).FirstOrDefaultAsync(predicate, ct);
     }
+
+    /// <inheritdoc />
+    public Task<UserEntity?> GetUserByEmailAsync(string email, CancellationToken ct = default)
+    {
+        return FirstOrDefaultAsync(u => u.Email == email, ct);
+    }
 }

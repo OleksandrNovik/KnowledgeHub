@@ -3,6 +3,7 @@ using FluentResults;
 using KnowledgeHub.Application.Helpers;
 using KnowledgeHub.Application.Repositories;
 using KnowledgeHub.Application.Services.User;
+using KnowledgeHub.Application.User.Abstract;
 using KnowledgeHub.Domain.Dtos.User.Authorization;
 using KnowledgeHub.Domain.Entities.User;
 using MediatR;
@@ -15,13 +16,14 @@ public class UserRegistrationHandler(
     IJwtService jwtService,
     IMapper mapper,
     IPasswordHasher<UserEntity> passwordHasher) :
+    BaseAuthorizationResultHandler(jwtService, mapper),
     IRequestHandler<UserRegistrationCommand, Result<UserAuthorizationResult>>
 {
     /// <inheritdoc />
     public async Task<Result<UserAuthorizationResult>> Handle(UserRegistrationCommand request,
-        CancellationToken cancellationToken)
+        CancellationToken ct)
     {
-        var existingUser = await userRepository.FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
+        var existingUser = await userRepository.GetUserByEmailAsync(request.Email, ct);
 
         if (existingUser is null)
         {
@@ -31,10 +33,9 @@ public class UserRegistrationHandler(
 
             if (jwt is not null)
             {
-                await userRepository.AddAsync(newUser, cancellationToken);
+                await userRepository.AddAsync(newUser, ct);
 
-                var userInfo = mapper.Map<UserInfo>(newUser);
-                var registrationResult = new UserAuthorizationResult(userInfo, jwt);
+                var registrationResult = GetAuthorizationResult(newUser, jwt);
 
                 return Result.Ok(registrationResult);
             }
@@ -50,19 +51,9 @@ public class UserRegistrationHandler(
     /// </summary>
     private UserEntity CreateUserEntity(UserRegistrationCommand request)
     {
-        var user = mapper.Map<UserEntity>(request);
+        var user = Mapper.Map<UserEntity>(request);
         user.Password = passwordHasher.HashPassword(user, request.Password);
 
         return user;
-    }
-
-    /// <summary>
-    ///     Generates and returns jwt token for new user
-    /// </summary>
-    /// >
-    private JwtToken? GenerateToken(UserEntity user)
-    {
-        var userIdentity = mapper.Map<UserIdentity>(user);
-        return jwtService.GenerateJwtToken(userIdentity);
     }
 }

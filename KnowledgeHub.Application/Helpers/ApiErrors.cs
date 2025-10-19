@@ -19,4 +19,9 @@ public static class ApiErrors
     {
         return Result.Fail(new ApiError(StatusCodes.Status500InternalServerError, message));
     }
+
+    public static Result NotFound(string message)
+    {
+        return Result.Fail(new ApiError(StatusCodes.Status404NotFound, message));
+    }
 }
