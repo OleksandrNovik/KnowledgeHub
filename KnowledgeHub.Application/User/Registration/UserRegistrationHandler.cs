@@ -25,15 +25,14 @@ public class UserRegistrationHandler(
 
         if (existingUser is null)
         {
-            var newUser = mapper.Map<UserEntity>(request);
-            newUser.Password = passwordHasher.HashPassword(newUser, request.Password);
-            await userRepository.AddAsync(newUser, cancellationToken);
+            var newUser = CreateUserEntity(request);
 
-            var userIdentity = mapper.Map<UserIdentity>(newUser);
-            var jwt = jwtService.GenerateJwtToken(userIdentity);
+            var jwt = GenerateToken(newUser);
 
             if (jwt is not null)
             {
+                await userRepository.AddAsync(newUser, cancellationToken);
+
                 var userInfo = mapper.Map<UserInfo>(newUser);
                 var registrationResult = new UserAuthorizationResult(userInfo, jwt);
 
@@ -44,5 +43,26 @@ public class UserRegistrationHandler(
         }
 
         return ApiErrors.BadRequest($"User with {request.Email} already exists.");
+    }
+
+    /// <summary>
+    ///     Creates user entity and hashes password
+    /// </summary>
+    private UserEntity CreateUserEntity(UserRegistrationCommand request)
+    {
+        var user = mapper.Map<UserEntity>(request);
+        user.Password = passwordHasher.HashPassword(user, request.Password);
+
+        return user;
+    }
+
+    /// <summary>
+    ///     Generates and returns jwt token for new user
+    /// </summary>
+    /// >
+    private JwtToken? GenerateToken(UserEntity user)
+    {
+        var userIdentity = mapper.Map<UserIdentity>(user);
+        return jwtService.GenerateJwtToken(userIdentity);
     }
 }
